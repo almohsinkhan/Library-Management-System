@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from .models import Book
 
 # Home View
 def home(request):
@@ -23,6 +24,13 @@ def logout_request(request):
     logout(request)
     messages.info(request, "You have been logged out.")
     return redirect("home")
+
+def Books(request):
+    books = Book.objects.all()
+    context = {
+        'books': books
+    }
+    return render(request, 'Books.html', context)
 
     
 

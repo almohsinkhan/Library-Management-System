@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br/>
+    <h1 class="text-center">Books</h1>
+        <div>
+            <table class="table">
+                <thead class="thead-dark">
+                  <tr style="text-align: center;">
+                    <th scope="col">BOOK NO.</th>
+                    <th scope="col">BOOK COVER</th>     
+                    <th scope="col">BOOK NAME</th>
+                    <th scope="col">AUTHOR</th>
+                    <th scope="col">QUANTITY</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for book in books %}
+                  <tr style="text-align: center;">
+                    <th scope="row">{{forloop.counter}}</th>
+                    <td><img src="{{book.cover.url}}" alt="{{book.title}}" style="height: 60px; width: 60px;"></td>
+                    <td>{{book.title}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.quantity}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              
+        </div>
+{% endblock %}
+
+    
