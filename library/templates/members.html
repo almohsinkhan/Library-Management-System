@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1 class="text-center">Members</h1>
+    <br/>
+    <div>
+        <table class="table">
+            <thead>
+                <th scope="col">SR. NO.</th>
+                <th scope="col">ID</th>
+                <th scope="col">NAME</th>
+                <th scope="col">MORE</th>
+            </thead>
+            {% for member in members %}
+            <tbody>
+                <th scope="row"> {{forloop.counter }}</th>
+                <td scope="row">{{member.memberID}}</td> 
+                <td scope="row">{{member.first_name}} {{member.last_name}}</td>
+                <td><a href="{% url 'member' member.id %}"><button>CLICK FOR MORE</button></a></td>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

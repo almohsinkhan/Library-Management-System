@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Book
+from .models import Book, Member
 
 # Home View
 def home(request):
@@ -32,6 +32,15 @@ def Books(request):
     }
     return render(request, 'Books.html', context)
 
+def members(request):
+    members= Member.objects.all()
+    context = {
+        'members': members
+    }
+    return render(request, 'members.html', context)
     
 
-        
+def member(request, pk):
+    member_ = Member.objects.get(pk = pk)
+    return render(request, 'member.html', {'member' : member_})
+
