@@ -11,6 +11,7 @@
                     <th scope="col">BOOK NAME</th>
                     <th scope="col">AUTHOR</th>
                     <th scope="col">QUANTITY</th>
+                    <th scope="col">MORE</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -21,12 +22,16 @@
                     <td>{{book.title}}</td>
                     <td>{{book.author}}</td>
                     <td>{{book.quantity}}</td>
+                    <td><a href="{% url 'aboutbook' book.id %}"><button>Click for More</button></a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
-              </table>
-              
+              </table> 
         </div>
+    <br/>
+    <div class="text-center">
+    <a href="{% url 'add_book' %}"><button class="btn btn-primary">Add Book</button></a>
+    </div>
 {% endblock %}
 
     

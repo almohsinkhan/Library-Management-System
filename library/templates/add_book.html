@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>ADD BOOK</h1>
+<div class="col-md-6 offset-md-3">
+<form method="post" action="{% url 'add_book' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <div class="text-center">
+    <button type="submit", class="btn btn-primary" >submit</button>
+    </div>
+</form>
+</div>
+{% endblock %}

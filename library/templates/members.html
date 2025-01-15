@@ -4,7 +4,7 @@
     <br/>
     <div>
         <table class="table">
-            <thead>
+            <thead class="thead-dark">
                 <th scope="col">SR. NO.</th>
                 <th scope="col">ID</th>
                 <th scope="col">NAME</th>
@@ -19,5 +19,9 @@
             </tbody>
             {% endfor %}
         </table>
+    </div>
+    <br/>
+    <div class="text-center">
+    <a href="{% url 'add_member' %}" class="btn btn-primary">Add New Member</a>
     </div>
 {% endblock %}

@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Book, Member
+from .forms import BookForm , MemberForm # type: ignore
 
 # Home View
 def home(request):
@@ -27,6 +28,9 @@ def logout_request(request):
 
 def Books(request):
     books = Book.objects.all()
+    for book in books:
+        if not book.cover:
+            book.cover = 'default_cover.jpg'  # Replace with the path to your default cover image
     context = {
         'books': books
     }
@@ -44,3 +48,66 @@ def member(request, pk):
     member_ = Member.objects.get(pk = pk)
     return render(request, 'member.html', {'member' : member_})
 
+def delete(request, pk):
+    member_ = Member.objects.get(pk = pk)
+    member_.delete()
+    return redirect('members')
+
+def add_book(request):
+    form = BookForm()
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save(commit=False)  # Renamed to `book`
+            if not book.cover:  # Adjust to your model's field name
+                book.cover = 'default_image.jpg'  # Default image path
+            book.save()
+            return redirect('Books')
+        
+    return render(request, 'add_book.html', {'form': form})
+
+
+def add_member(request):
+    form = MemberForm()
+    if request.method == 'POST':
+        form = MemberForm(request.POST, request.FILES)
+        if form.is_valid:
+            form.save()
+            return redirect('members')
+        
+    
+    return render(request, 'add_member.html', {'form':form})
+
+def edit(request, pk):
+    member_ = Member.objects.get(pk = pk)
+    form = MemberForm(instance=member_)
+    if request.method == 'POST':
+        form = MemberForm(request.POST, request.FILES, instance=member_)
+        if form.is_valid():
+            form.save()
+            return redirect('member', pk=pk)
+    return render(request, 'edit.html', {'form':form, 'member':member_})
+
+def aboutbook(request, pk):
+    aboutbook_ = Book.objects.get(pk = pk)
+    return render(request, 'aboutbook.html', {'aboutbook':aboutbook_})
+
+def edit_book(request, pk):
+    book = Book.objects.get(pk=pk)
+    form = BookForm(instance=book)  # Initialize with the book instance
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES, instance=book)
+        if form.is_valid():
+            form.save()  # Add parentheses to call the method
+            return redirect('aboutbook', pk=pk)  # Redirect with the correct view name
+        
+    return render(request, 'edit_book.html', {'form': form, 'book': book})  # Correct template name
+
+
+def delete_book(request, pk):
+    book = Book.objects.get(pk = pk)
+    book.delete()
+    return redirect('Books')
+
+
+        

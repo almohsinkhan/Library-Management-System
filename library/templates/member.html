@@ -2,7 +2,12 @@
 {% block content %}
     <div class="card text-center">
         <div class="card-header">
-            <img src="{{member.image.url}}" alt="{{member.memberID}}" style="height: 80px; width: 80px;">
+          {% if member.image %}
+          <img src="{{member.image.url}}" alt="{{ member.memberID }}" style="height: 80px; width: 80px;">
+          {% else %}
+              <img src=" " alt="{{ member.memberID }}" style="height: 80px; width: 80px;">
+          {% endif %}
+      
         </div>
         <div class="card-body">
           <h5 class="card-title">MEMBER ID: {{member.memberID}}</h5>
@@ -10,8 +15,8 @@
           <p class="card-text">PHONE: {{member.phone}}</p>
           <p class="card-text">EMAIL: {{member.email}}</p>
           <p class="card-text">ADDRESS: {{member.address}}</p>
-          <a href="#" class="btn btn-primary">Update</a>
-          <a href="#" class="btn btn-danger">Delete</a>
+          <a href="{% url 'edit' member.id %}" class="btn btn-primary">Update</a>
+          <a href="{% url 'delete' member.id %}" class="btn btn-danger">Delete</a>
         </div>
         
       </div>

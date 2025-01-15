@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card text-center">
+    <div class="card-header">
+      {% if aboutbook.cover %}
+      <img src="{{aboutbook.cover.url}}" alt="{{ aboutbook.isbn }}" style="height: 80px; width: 80px;">
+      {% else %}
+          <img src=" " alt="{{ aboutbook.isbn }}" style="height: 80px; width: 80px;">
+      {% endif %}
+  
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Book Title: {{aboutbook.title}}</h5>
+      <p class="card-text">Author Name: {{aboutbook.author}}</p>
+      <p class="card-text">Publication Date: {{aboutbook.publication_date}}</p>
+      <p class="card-text">isbn: {{aboutbook.isbn}}</p>
+      <p class="card-text">pages: {{aboutbook.pages}}</p>      
+      <p class="card-text">Price: {{aboutbook.price}}</p>
+      <p class="card-text">quantity: {{aboutbook.quantity}}</p>
+    </div>
+
+    <div class="card-footer text-muted">
+      <a href="{% url 'edit_book' aboutbook.id %}"><button class="btn btn-primary">Edit</button></a>
+      <a href="{% url 'delete_book' aboutbook.id %}"><button class="btn btn-danger">Delete</button></a>
+    </div>
+    
+  </div>
+{% endblock %}
