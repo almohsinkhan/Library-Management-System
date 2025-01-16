@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Borrowed Books</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Member Name</th>
+                <th>Issue date</th>
+                <th>Due date</th>
+                <th>Return</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in borrowed_books %}
+                <tr>
+                    <td>{{ book.book }}</td>
+                    <td>{{ book.member }}</td>
+                    <td>{{ book.issue_date }}</td>
+                    <td>{{ book.due_date }}</td>
+                    {% if not book.returned %}
+                        <td><a href="{% url 'return_book' book.id %}" class="btn btn-primary">Return</a></td>
+                    {% else %}
+                        <td>Returned</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="{% url 'add_borrow' %}" class="btn btn-primary">New Issue</a>
+    </div>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book, Member
+from .models import Book, Member, BookIssue
 
 class BookForm(forms.ModelForm):
     class Meta:
@@ -98,4 +98,21 @@ class MemberForm(forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
             }),
+        }
+
+class BorrowForm(forms.ModelForm):
+    book = forms.ModelChoiceField(queryset=Book.objects.all(), empty_label='Select a book', widget=forms.Select(attrs={'class': 'form-control'}))
+    member = forms.ModelChoiceField(queryset=Member.objects.all(), empty_label='Select a member', widget=forms.Select(attrs={'class': 'form-control'}))
+    due_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Select due date'}))
+
+    class Meta:
+        model = BookIssue
+        fields = ['book', 'member', 'due_date']
+        labels = {
+            'book': 'Book',
+            'member': 'Member',
+            'due_date': 'Due Date',
+        }
+        help_texts = {
+            'due_date': 'Select the due date for the book issue.',
         }

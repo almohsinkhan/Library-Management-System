@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <br/>
+    <h1 class="text-center">New Issue</h1>
+    <br/>
+    <div class="container" style="width: 50%">
+        <form method="post" action="{% url 'add_borrow' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="text-center">
+            <button type="submit" class="btn btn-primary">Issue</button>
+            </div>
+        </form>
+    </div>
+{% endblock%}

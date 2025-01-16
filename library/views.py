@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .models import Book, Member
-from .forms import BookForm , MemberForm # type: ignore
+from .models import Book, Member, BookIssue
+from .forms import BookForm , MemberForm ,BorrowForm
 
 # Home View
 def home(request):
@@ -108,6 +108,30 @@ def delete_book(request, pk):
     book = Book.objects.get(pk = pk)
     book.delete()
     return redirect('Books')
+
+def borrowed_books(request):
+    borrowed_books = BookIssue.objects.all()
+    return render(request, 'borrowed_books.html', {'borrowed_books': borrowed_books})
+
+def return_book(request, pk):
+    book = BookIssue.objects.get(pk=pk)
+    book.returned = True
+    book.save()
+    return redirect('borrowed_books')
+
+def add_borrow(request):
+    form = BorrowForm()
+    if request.method == 'POST':
+        form = BorrowForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('borrowed_books')
+    return render(request, 'add_borrow.html', {'form': form})
+
+
+
+    
+
 
 
         
