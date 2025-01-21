@@ -71,11 +71,9 @@ def add_member(request):
     form = MemberForm()
     if request.method == 'POST':
         form = MemberForm(request.POST, request.FILES)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             return redirect('members')
-        
-    
     return render(request, 'add_member.html', {'form':form})
 
 def edit(request, pk):
@@ -109,24 +107,45 @@ def delete_book(request, pk):
     book.delete()
     return redirect('Books')
 
+# for showing detail of book
 def borrowed_books(request):
     borrowed_books = BookIssue.objects.all()
     return render(request, 'borrowed_books.html', {'borrowed_books': borrowed_books})
 
 def return_book(request, pk):
-    book = BookIssue.objects.get(pk=pk)
-    book.returned = True
+    book_issue = BookIssue.objects.get(pk=pk)
+    book_issue.returned = True
+    book_issue.save()
+    book = book_issue.book
+    book.No_of_copies_issued -= 1
     book.save()
     return redirect('borrowed_books')
 
-def add_borrow(request):
+
+from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib import messages
+from .forms import BorrowForm
+from .models import Book
+
+def add_borrow(request): 
     form = BorrowForm()
     if request.method == 'POST':
         form = BorrowForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('borrowed_books')
+            # Get the book instance using its ID (from the form)
+            book = form.cleaned_data['book']
+            if book.quantity > book.No_of_copies_issued:
+                book.No_of_copies_issued += 1
+                book.save()
+                form.save()
+                return redirect('borrowed_books')
+            else:
+                messages.error(request, 'Not enough copies available to borrow.')
+        else:
+            messages.error(request, 'Invalid form submission.')
+
     return render(request, 'add_borrow.html', {'form': form})
+
 
 
 

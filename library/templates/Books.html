@@ -11,6 +11,7 @@
                     <th scope="col">BOOK NAME</th>
                     <th scope="col">AUTHOR</th>
                     <th scope="col">QUANTITY</th>
+                    <th scope="col">ISSUED</th>
                     <th scope="col">MORE</th>
                   </tr>
                 </thead>
@@ -22,6 +23,7 @@
                     <td>{{book.title}}</td>
                     <td>{{book.author}}</td>
                     <td>{{book.quantity}}</td>
+                    <td>{{book.No_of_copies_issued}}</td>
                     <td><a href="{% url 'aboutbook' book.id %}"><button>Click for More</button></a></td>
                   </tr>
                   {% endfor %}

@@ -8,7 +8,9 @@ class Book(models.Model):
     isbn = models.CharField(max_length=13, unique=True, null=True, blank=True)  
     pages = models.PositiveIntegerField(null=True, blank=True) 
     price = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  
-    quantity = models.PositiveIntegerField(default=0) 
+    quantity = models.PositiveIntegerField(default=0)
+    No_of_copies_issued = models.IntegerField(default=0)
+     
     
     def __str__(self):
         return self.title
