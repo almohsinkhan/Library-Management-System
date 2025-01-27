@@ -1,8 +1,70 @@
 {% extends 'base.html'%}
 {% block content %}
+<style>
+    .container-box {
+        background-color: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .heading {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .frontbox {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .box {
+        width: 250px;
+        height: 250px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+
+    .icon {
+        font-size: 40px;
+        margin-bottom: 20px;
+    }
+
+    .btn-primary {
+        margin-top: 10px;
+    }
+
+</style>
     {% if user.is_authenticated %}
         {% if user.is_staff %}
-        <h1>Admin Home</h1>
+        <div class="container-box">
+        <div class="heading">
+            <h1>Admin Panel</h1>
+        </div>
+        <div class="frontbox">
+            <div class="box">
+                <div><img src="media/icon/5402751.png" alt="book" style="height: 50px; width: 50px;"></div>
+                <a href="{% url 'add_book' %}" class="btn btn-primary">Add Book</a>
+            </div>
+            <div class="box">
+                <div><img src="media/icon/png-clipart-computer-icons-person-name-miscellaneous-computer-wallpaper-thumbnail.png" alt="borrow" style="height: 50px; width: 50px;"></div>
+                <a href="{% url 'add_member' %}" class="btn btn-primary">Add Member</a>
+            </div>
+            <div class="box">
+                <div><img src="media/icon/download.png" alt="member" style="height: 50px; width: 50px;"></div>
+                <a href="{% url 'borrowed_books' %}" class="btn btn-primary">Borrowed Books</a>
+            </div>
+        </div>
+    </div>
         {% endif %}
         {% else %}
         <h1>Login</h1>
@@ -20,5 +82,6 @@
         <button type="submit" class="btn btn-primary">Login</button>
         </form>  
     </div>
+    
     {% endif %}
 {% endblock %}
